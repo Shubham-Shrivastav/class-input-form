@@ -1,0 +1,18 @@
+/* Navbar.css */
+
+.navbar {
+    background-color: #f0f0f0;
+    padding: 10px;
+}
+
+.container {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.navbar-brand {
+    color: #333;
+    font-weight: bold;
+    text-decoration: none;
+}

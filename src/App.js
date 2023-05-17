@@ -1,21 +1,24 @@
-import React, { Component } from 'react';
-import { BrowserRouter as Router, Route } from 'react-router-dom';
-
+import React from 'react';
+import { Router, Route, Routes } from 'react-router-dom';
+import { createBrowserHistory } from 'history';
 import Form from './components/Form';
 import Navbar from './components/Navbar';
 import Formdata from './components/Formdata';
 
-class App extends Component {
-  render() {
-    return (
-      <Router>
-        <Navbar title="Detail Form" />
-        <div className="container">
-          <Route exact path="/" component={Form} />
-        </div>
-        <Route path="/formdata" component={Formdata} />
-      </Router>
-    );
-  }
+const history = createBrowserHistory();
+
+function App() {
+  return (
+    <Router history={history}>
+      <Navbar title="Detail Form" />
+      <div className="container">
+        <Routes>
+          <Route path="/" element={<Form />} />
+          <Route path="/formdata" element={<Formdata />} />
+        </Routes>
+      </div>
+    </Router>
+  );
 }
+
 export default App;

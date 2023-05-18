@@ -1,8 +1,9 @@
 import React, { useState } from 'react';
-import { Link } from 'react-router-dom';
-import './Form.css';
+import { Route, Link, useNavigate } from 'react-router-dom';
+import Formdata from './Formdata';
+// import './components/Form.css';
 
-const Form = () => {
+export default function App() {
   const [formData, setFormData] = useState({
     name: '',
     email: '',
@@ -11,6 +12,8 @@ const Form = () => {
   });
 
   const [tableData, setTableData] = useState([]);
+
+  const navigate = useNavigate();
 
   const handleSubmit = function (event) {
     event.preventDefault();
@@ -21,6 +24,7 @@ const Form = () => {
       gender: '',
       password: ''
     });
+    navigate('/form-data');
   };
 
   const handleChange = function (event) {
@@ -81,8 +85,7 @@ const Form = () => {
         </button>
       </form>
       <Link to="/form-data">View Form Data</Link>
+      <Route path="/form-data" element={<Formdata data={tableData} />} />
     </div>
   );
 }
-
-export default Form;

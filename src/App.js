@@ -1,20 +1,19 @@
+// App.js
 import React from 'react';
-import { Router, Route, Routes } from 'react-router-dom';
-import { createBrowserHistory } from 'history';
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import Form from './components/Form';
-import Navbar from './components/Navbar';
 import Formdata from './components/Formdata';
-
-const history = createBrowserHistory();
+import Navbar from './components/Navbar';
+import './App.css';
 
 function App() {
   return (
-    <Router history={history}>
-      <Navbar title="Detail Form" />
-      <div className="container">
+    <Router>
+      <Navbar />
+      <div className="App">
         <Routes>
           <Route path="/" element={<Form />} />
-          <Route path="/formdata" element={<Formdata />} />
+          <Route path="/form-data" element={<Formdata />} />
         </Routes>
       </div>
     </Router>
@@ -22,3 +21,22 @@ function App() {
 }
 
 export default App;
+
+// import React from 'react';
+// import { Switch, Route } from 'react-router-dom';
+// import Form from './Form';
+// import Formdata from './Formdata';
+
+// function App() {
+//   return (
+//     <div>
+//       <Switch>
+//         <Route exact path="/" component={Form} />
+//         <Route path="/formdata" component={Formdata} />
+//       </Switch>
+//     </div>
+//   );
+// }
+
+// export default App;
+

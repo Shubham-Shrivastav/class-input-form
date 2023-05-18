@@ -1,9 +1,8 @@
 import React, { useState } from 'react';
-import { Routes, Route, Link } from 'react-router-dom';
-import Formdata from './Formdata';
-import './components/Form.css';
+import { Link } from 'react-router-dom';
+import './Form.css';
 
-export default function Form() {
+const Form = () => {
   const [formData, setFormData] = useState({
     name: '',
     email: '',
@@ -82,10 +81,8 @@ export default function Form() {
         </button>
       </form>
       <Link to="/form-data">View Form Data</Link>
-      <Routes>
-        <Route path="/" element={<Form />} />
-        <Route path="/form-data" element={<Formdata data={tableData} />} />
-      </Routes>
     </div>
   );
 }
+
+export default Form;

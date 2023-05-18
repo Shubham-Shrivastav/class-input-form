@@ -1,18 +1,13 @@
 import React from 'react';
-import './Navbar.css'; 
+import { Link } from 'react-router-dom';
 
-export default function Navbar(props) {
+const Navbar = () => {
   return (
-    <div>
-      <nav className="navbar">
-        <div className="container">
-          <a className="navbar-brand" href="/">{props.title}</a>
-
-          <div className="navbar-collapse" id="navbarSupportedContent">
-            {/* Add any additional navigation items or components here */}
-          </div>
-        </div>
-      </nav>
-    </div>
+    <nav>
+      <Link to="/">Form Page</Link>
+      <Link to="/form-data">Detail Page</Link>
+    </nav>
   );
 }
+
+export default Navbar;

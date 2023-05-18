@@ -1,5 +1,3 @@
-
-
 import React, { Component } from 'react';
 
 class Formdata extends Component {

@@ -1,13 +1,14 @@
-import React from 'react';
-import { Link } from 'react-router-dom';
+import React from 'react'
 
-const Navbar = () => {
-  return (
-    <nav>
-      <Link to="/">Form Page</Link>
-      <Link to="/form-data">Detail Page</Link>
-    </nav>
-  );
+export default function Navbar(props) {
+    return (
+        <div><nav className="navbar navbar-expand-lg bg-body-tertiary">
+            <div className="container-fluid">
+                <a className="navbar-brand" href="/">{props.title}</a>
+
+                <div className="collapse navbar-collapse" id="navbarSupportedContent">
+                </div>
+            </div>
+        </nav></div>
+    )
 }
-
-export default Navbar;

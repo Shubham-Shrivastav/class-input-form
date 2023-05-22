@@ -1,40 +1,20 @@
 import React from 'react';
-import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import { BrowserRouter as Router, Route } from 'react-router-dom';
+
 import Form from './components/Form';
-import Formdata from './components/Formdata';
 import Navbar from './components/Navbar';
-import './App.css';
+import Formdata from './components/Formdata';
 
 function App() {
   return (
     <Router>
-      <Navbar />
-      <div className="App">
-        <Routes>
-          <Route path="/" element={<Form />} />
-          <Route path="/form-data" element={<Formdata />} />
-        </Routes>
+      <Navbar title="Detail Form" />
+      <div className="container">
+        <Route exact path="/" component={Form} />
       </div>
+      <Route path="/formdata" component={Formdata} />
     </Router>
   );
 }
 
 export default App;
-
-// import React from 'react';
-// import { Switch, Route } from 'react-router-dom';
-// import Form from './Form';
-// import Formdata from './Formdata';
-
-// function App() {
-//   return (
-//     <div>
-//       <Switch>
-//         <Route exact path="/" component={Form} />
-//         <Route path="/formdata" component={Formdata} />
-//       </Switch>
-//     </div>
-//   );
-// }
-
-// export default App;

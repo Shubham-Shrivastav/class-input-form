@@ -1,91 +1,111 @@
-import React, { useState } from 'react';
-import { Route, Link, useNavigate } from 'react-router-dom';
-import Formdata from './Formdata';
-// import './components/Form.css';
+import React, { Component } from 'react';
+import { BrowserRouter as Router, Switch, Route, Link } from 'react-router-dom';
+import FormData from './Formdata';
 
-export default function App() {
-  const [formData, setFormData] = useState({
-    name: '',
-    email: '',
-    gender: '',
-    password: ''
-  });
+class Form extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      formData: {
+        name: '',
+        email: '',
+        gender: '',
+        password: ''
+      },
+      tableData: []
+    };
+  }
 
-  const [tableData, setTableData] = useState([]);
-
-  const navigate = useNavigate();
-
-  const handleSubmit = function (event) {
+  handleSubmit(event) {
     event.preventDefault();
-    setTableData([...tableData, formData]);
-    setFormData({
-      name: '',
-      email: '',
-      gender: '',
-      password: ''
+    const { formData, tableData } = this.state;
+    this.setState({
+      tableData: [...tableData, formData],
+      formData: {
+        name: '',
+        email: '',
+        gender: '',
+        password: ''
+      }
     });
-    navigate('/form-data');
-  };
+  }
 
-  const handleChange = function (event) {
-    setFormData({
-      ...formData,
-      [event.target.name]: event.target.value
-    });
-  };
+  handleChange(event) {
+    const { name, value } = event.target;
+    this.setState(prevState => ({
+      formData: {
+        ...prevState.formData,
+        [name]: value
+      }
+    }));
+  }
 
-  return (
-    <div>
-      <form onSubmit={handleSubmit} className="form-container">
-        <div className="input-group mb-3">
-          <label>Name:</label>
-          <input
-            className="form-input"
-            type="text"
-            name="name"
-            value={formData.name}
-            onChange={handleChange}
-          />
-        </div>
-        <div className="input-group mb-3">
-          <label>Email:</label>
-          <input
-            className="form-input"
-            type="email"
-            name="email"
-            value={formData.email}
-            onChange={handleChange}
-          />
-        </div>
-        <div className="input-group mb-3">
-          <label>Gender:</label>
-          <select
-            name="gender"
-            className="form-input"
-            value={formData.gender}
-            onChange={handleChange}
-          >
-            <option value="">Other</option>
-            <option value="male">Male</option>
-            <option value="female">Female</option>
-          </select>
-        </div>
-        <div className="input-group mb-3">
-          <label>Password:</label>
-          <input
-            type="password"
-            name="password"
-            className="form-input"
-            value={formData.password}
-            onChange={handleChange}
-          />
-        </div>
-        <button type="submit" className="btn-primary">
-          Submit
-        </button>
-      </form>
-      <Link to="/form-data">View Form Data</Link>
-      <Route path="/form-data" element={<Formdata data={tableData} />} />
-    </div>
-  );
+  render() {
+    const { formData, tableData } = this.state;
+
+    return (
+      <Router>
+        <Switch>
+          <Route path="/" exact>
+            <form onSubmit={event => this.handleSubmit(event)}>
+              <div>
+                <label>Name:</label>
+                <input
+                  type="text"
+                  name="name"
+                  value={formData.name}
+                  onChange={event => this.handleChange(event)}
+                />
+              </div>
+              <div>
+                <label>Email:</label>
+                <input
+                  type="email"
+                  name="email"
+                  value={formData.email}
+                  onChange={event => this.handleChange(event)}
+                />
+              </div>
+              <div>
+                <label>Gender:</label>
+                <select
+                  name="gender"
+                  value={formData.gender}
+                  onChange={event => this.handleChange(event)}
+                >
+                  <option value="">Other</option>
+                  <option value="male">Male</option>
+                  <option value="female">Female</option>
+                </select>
+              </div>
+              <div>
+                <label>Password:</label>
+                <input
+                  type="password"
+                  name="password"
+                  value={formData.password}
+                  onChange={event => this.handleChange(event)}
+                />
+              </div>
+              <button type="submit">Submit</button>
+            </form>
+            <Link
+              to={{
+                pathname: "/formdata",
+                state: { tableData }
+              }}
+            >
+              View Form Data
+            </Link>
+          </Route>
+          <Route path="/formdata">
+            <FormData data={tableData} />
+            <Link to="/">Go Back</Link>
+          </Route>
+        </Switch>
+      </Router>
+    );
+  }
 }
+
+export default Form;

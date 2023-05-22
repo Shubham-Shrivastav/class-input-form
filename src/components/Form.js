@@ -1,25 +1,23 @@
 import React, { Component } from 'react';
 import { BrowserRouter as Router, Switch, Route, Link } from 'react-router-dom';
+
 import FormData from './Formdata';
 
 class Form extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      formData: {
-        name: '',
-        email: '',
-        gender: '',
-        password: ''
-      },
-      tableData: []
-    };
-  }
+  state = {
+    formData: {
+      name: '',
+      email: '',
+      gender: '',
+      password: ''
+    },
+    tableData: []
+  };
 
-  handleSubmit(event) {
+  handleSubmit = (event) => {
     event.preventDefault();
     const { formData, tableData } = this.state;
-    this.setState({
+    this.setState((prevState) => ({
       tableData: [...tableData, formData],
       formData: {
         name: '',
@@ -27,18 +25,18 @@ class Form extends Component {
         gender: '',
         password: ''
       }
-    });
-  }
+    }));
+  };
 
-  handleChange(event) {
+  handleChange = (event) => {
     const { name, value } = event.target;
-    this.setState(prevState => ({
+    this.setState((prevState) => ({
       formData: {
         ...prevState.formData,
         [name]: value
       }
     }));
-  }
+  };
 
   render() {
     const { formData, tableData } = this.state;
@@ -47,14 +45,14 @@ class Form extends Component {
       <Router>
         <Switch>
           <Route path="/" exact>
-            <form onSubmit={event => this.handleSubmit(event)}>
+            <form onSubmit={this.handleSubmit}>
               <div>
                 <label>Name:</label>
                 <input
                   type="text"
                   name="name"
                   value={formData.name}
-                  onChange={event => this.handleChange(event)}
+                  onChange={this.handleChange}
                 />
               </div>
               <div>
@@ -63,7 +61,7 @@ class Form extends Component {
                   type="email"
                   name="email"
                   value={formData.email}
-                  onChange={event => this.handleChange(event)}
+                  onChange={this.handleChange}
                 />
               </div>
               <div>
@@ -71,7 +69,7 @@ class Form extends Component {
                 <select
                   name="gender"
                   value={formData.gender}
-                  onChange={event => this.handleChange(event)}
+                  onChange={this.handleChange}
                 >
                   <option value="">Other</option>
                   <option value="male">Male</option>
@@ -84,19 +82,12 @@ class Form extends Component {
                   type="password"
                   name="password"
                   value={formData.password}
-                  onChange={event => this.handleChange(event)}
+                  onChange={this.handleChange}
                 />
               </div>
               <button type="submit">Submit</button>
             </form>
-            <Link
-              to={{
-                pathname: "/formdata",
-                state: { tableData }
-              }}
-            >
-              View Form Data
-            </Link>
+            <Link to="/formdata">View Form Data</Link>
           </Route>
           <Route path="/formdata">
             <FormData data={tableData} />

@@ -1,20 +1,41 @@
-import React from 'react';
-import { BrowserRouter as Router, Route } from 'react-router-dom';
-
 import Form from './components/Form';
-import Navbar from './components/Navbar';
-import Formdata from './components/Formdata';
+import TableData from './components/Tabledata';
+import { RouterProvider, createBrowserRouter } from "react-router-dom";
+import ErrorPage from "./error-page";
+import React, { useState } from 'react';
 
-function App() {
+const App = () => {
+  const [tableData, setTableData] = useState([]);
+  const [formData, setFormData] = useState({
+    name: '',
+    email: '',
+    gender: '',
+    password: ''
+  });
+
+  const router = createBrowserRouter([
+    {
+      path: '/',
+      element: <Form
+        tableData={tableData}
+        setFormData={setFormData}
+        formData={formData}
+        setTableData={setTableData}
+      />,
+      errorElement: <ErrorPage />
+    },
+
+    // submitting the data to the page called tabledata
+    {
+      path: 'formdata',
+      element: <TableData data={tableData} />
+    }
+  ]);
+
   return (
-    <Router>
-      <Navbar title="Detail Form" />
-      <div className="container">
-        <Route exact path="/" component={Form} />
-      </div>
-      <Route path="/formdata" component={Formdata} />
-    </Router>
-  );
-}
+    <RouterProvider router={router} />
+  )
+
+};
 
 export default App;

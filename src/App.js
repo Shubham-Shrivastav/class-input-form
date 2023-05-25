@@ -3,6 +3,8 @@ import TableData from './components/Tabledata';
 import { RouterProvider, createBrowserRouter } from "react-router-dom";
 import ErrorPage from "./error-page";
 import React, { useState } from 'react';
+import { DataProvider } from './Context/DataContext';
+
 
 const App = () => {
   const [tableData, setTableData] = useState([]);
@@ -27,13 +29,18 @@ const App = () => {
 
     // submitting the data to the page called tabledata
     {
-      path: 'formdata',
-      element: <TableData data={tableData} />
+      path: '/formdata',
+      element: <TableData />
     }
   ]);
 
   return (
-    <RouterProvider router={router} />
+    <>
+      {/* removed the props to the routs element and added the value in DataProvider */}
+      <DataProvider value={{ tableData, setTableData, formData, setFormData }}>
+        <RouterProvider router={router} />
+      </DataProvider>
+    </>
   )
 
 };

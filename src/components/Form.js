@@ -1,8 +1,11 @@
-import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
+import { DataContext } from '../Context/DataContext';
+import { useContext } from 'react';
 
-const Form = ({ tableData, setFormData, formData, setTableData }) => {
-   const handleSubmit = (event) => {
+const Form = () => {
+  const { tableData, setFormData, formData, setTableData } = useContext(DataContext);
+
+  const handleSubmit = (event) => {
     event.preventDefault();
     setTableData([...tableData, formData])
     setFormData({
@@ -14,7 +17,7 @@ const Form = ({ tableData, setFormData, formData, setTableData }) => {
   };
 
   const handleChange = (event) => {
-    console.log(formData)
+    // console.log(formData)
     const { name, value } = event.target;
     setFormData((prevFormData) => ({
       ...prevFormData,

@@ -1,8 +1,7 @@
-/* Navbar.css */
-
 .navbar {
     background-color: #f0f0f0;
-    padding: 10px;
+    padding: 12px;
+    margin-bottom: 10px;
 }
 
 .container {

@@ -6,6 +6,15 @@ const Form = () => {
   const { addFormData, formData,
     setFormData } = useContext(DataContext);
 
+
+  //created a function for handling the change 
+  const handleChange = (event) => {
+    setFormData((prevFormData) => ({
+      ...prevFormData,
+      [event.target.name]: event.target.value
+    }))
+  };
+
   const handleSubmit = (event) => {
     event.preventDefault();
     addFormData(formData);
@@ -17,10 +26,7 @@ const Form = () => {
         <div>
           <label>Name:</label>
           <input value={formData.name}
-            onChange={event => setFormData({
-              ...formData, name: event.target.value
-            })
-            }
+            onChange={handleChange}
             type="text"
             name="name"
             required />
@@ -29,9 +35,7 @@ const Form = () => {
         <div>
           <label>Email:</label>
           <input value={formData.email}
-            onChange={(event) =>
-              setFormData({ ...formData, email: event.target.value })
-            }
+            onChange={handleChange}
             type="email"
             name="email"
             required />
@@ -54,8 +58,8 @@ const Form = () => {
         <div>
           <label>Password:</label>
           <input value={formData.password}
-            onChange={(event) =>
-              setFormData({ ...formData, password: event.target.value })} type="password" name="password" required />
+            onChange={handleChange}
+            type="password" name="password" required />
         </div>
 
         <button type="submit">Submit</button>

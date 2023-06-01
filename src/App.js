@@ -1,21 +1,31 @@
-import React, { Component } from 'react';
-import { BrowserRouter as Router, Route } from 'react-router-dom';
-
+import React from 'react';
+import { RouterProvider, createBrowserRouter } from "react-router-dom";
+import ErrorPage from "./error-page";
 import Form from './components/Form';
-import Navbar from './components/Navbar';
-import Formdata from './components/Formdata';
+import TableData from './components/Tabledata';
+import { DataProvider } from './Context/DataContext';
 
-class App extends Component {
-  render() {
-    return (
-      <Router>
-        <Navbar title="Detail Form" />
-        <div className="container">
-          <Route exact path="/" component={Form} />
-        </div>
-        <Route path="/formdata" component={Formdata} />
-      </Router>
-    );
-  }
-}
+const App = () => {
+  const router = createBrowserRouter([
+    {
+      path: '/',
+      element: <Form />,
+      errorElement: <ErrorPage />
+    },
+
+    // submitting the data to the page called tabledata
+    {
+      path: '/formdata',
+      element: <TableData />
+    }
+  ]);
+
+  return (
+    <DataProvider>
+      {/* removed the props to the routs element and also the value in DataProvider */}
+      <RouterProvider router={router} />
+    </DataProvider>
+  );
+};
+
 export default App;

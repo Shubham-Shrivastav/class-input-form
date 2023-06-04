@@ -1,12 +1,11 @@
-import React, { useContext } from 'react';
+import React from 'react';
 import { Link } from 'react-router-dom';
-import { DataContext } from '../Context/DataContext';
+import { connect } from 'react-redux';
 
-const TableData = () => {
-  const { tableData } = useContext(DataContext);
-
+const TableData = ({ tableData }) => {
   return (
     <>
+      <h1>Table Data</h1>
       <table>
         <thead>
           <tr>
@@ -38,4 +37,10 @@ const TableData = () => {
   );
 };
 
-export default TableData;
+const mapStateToProps = (state) => {
+  return {
+    tableData: state.form.tableData,
+  };
+};
+
+export default connect(mapStateToProps)(TableData);

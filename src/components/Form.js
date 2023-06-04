@@ -1,72 +1,73 @@
-import React, { useContext } from 'react';
+import React from 'react';
+import { Field, reduxForm } from 'redux-form';
 import { Link } from 'react-router-dom';
-import { DataContext } from '../Context/DataContext';
+import { connect } from 'react-redux';
+import { addFormData } from '../store/rootReducer';
 
-const Form = () => {
-  const { addFormData, formData,
-    setFormData } = useContext(DataContext);
-
-
-  //created a function for handling the change 
-  const handleChange = (event) => {
-    setFormData((prevFormData) => ({
-      ...prevFormData,
-      [event.target.name]: event.target.value
-    }))
-  };
-
-  const handleSubmit = (event) => {
-    event.preventDefault();
-    addFormData(formData);
+const Form = ({ handleSubmit, addFormData }) => {
+  const onSubmit = (data) => {
+    addFormData(data);
   };
 
   return (
     <div>
-      <form onSubmit={handleSubmit}>
+      <h1>Form</h1>
+      <form onSubmit={handleSubmit(onSubmit)}>
         <div>
-          <label>Name:</label>
-          <input value={formData.name}
-            onChange={handleChange}
-            type="text"
+          <label htmlFor="name">Name:</label>
+          <Field
             name="name"
-            required />
+            component="input"
+            type="text"
+            required
+          />
         </div>
-
         <div>
-          <label>Email:</label>
-          <input value={formData.email}
-            onChange={handleChange}
-            type="email"
+          <label htmlFor="email">Email:</label>
+          <Field
             name="email"
-            required />
+            component="input"
+            type="email"
+            required
+          />
         </div>
-
         <div>
-          <label>Gender:</label>
-          <select
-            value={formData.gender}
-            onChange={handleChange}
+          <label htmlFor="gender">Gender:</label>
+          <Field
             name="gender"
+            component="select"
             required
           >
-            <option value="">Other</option>
+            <option value="">Select</option>
             <option value="male">Male</option>
             <option value="female">Female</option>
-          </select>
+          </Field>
         </div>
-
         <div>
-          <label>Password:</label>
-          <input value={formData.password}
-            onChange={handleChange}
-            type="password" name="password" required />
+          <label htmlFor="password">Password:</label>
+          <Field
+            name="password"
+            component="input"
+            type="password"
+            required
+          />
         </div>
-
         <button type="submit">Submit</button>
       </form>
-      <Link to="/formdata">View Form Data</Link>
+      <Link to="/formdata">Go to TableData</Link>
     </div>
   );
 };
 
-export default Form;
+const mapStateToProps = (state) => {
+  return {};
+};
+
+const mapDispatchToProps = {
+  addFormData,
+};
+
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(reduxForm({ form: 'myForm' })(Form));

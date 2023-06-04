@@ -1,21 +1,19 @@
-import React, { Component } from 'react';
-import { BrowserRouter as Router, Route } from 'react-router-dom';
-
+import React from 'react';
+import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
+import ErrorPage from './error-page';
 import Form from './components/Form';
-import Navbar from './components/Navbar';
-import Formdata from './components/Formdata';
+import TableData from './components/TableData';
 
-class App extends Component {
-  render() {
-    return (
-      <Router>
-        <Navbar title="Detail Form" />
-        <div className="container">
-          <Route exact path="/" component={Form} />
-        </div>
-        <Route path="/formdata" component={Formdata} />
-      </Router>
-    );
-  }
-}
+const App = () => {
+  return (
+    <Router>
+      <Switch>
+        <Route exact path="/" component={Form} />
+        <Route path="/formdata" component={TableData} />
+        <Route component={ErrorPage} />
+      </Switch>
+    </Router>
+  );
+};
+
 export default App;

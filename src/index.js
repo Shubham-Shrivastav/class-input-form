@@ -1,17 +1,34 @@
-import React from 'react';
-import ReactDOM from 'react-dom/client';
-import './index.css';
-import App from './App';
-import reportWebVitals from './reportWebVitals';
+import { combineReducers } from 'redux';
 
-const root = ReactDOM.createRoot(document.getElementById('root'));
-root.render(
-  <React.StrictMode>
-    <App />
-  </React.StrictMode>
-);
+const formReducer = (state = {
+  name: '',
+  email: '',
+  gender: '',
+  password: ''
+}, action) => {
+  switch (action.type) {
+    case 'UPDATE_FORM_DATA':
+      return {
+        ...state,
+        [action.payload.name]: action.payload.value
+      };
+    default:
+      return state;
+  }
+};
 
-// If you want to start measuring performance in your app, pass a function
-// to log results (for example: reportWebVitals(console.log))
-// or send to an analytics endpoint. Learn more: https://bit.ly/CRA-vitals
-reportWebVitals();
+const tableDataReducer = (state = [], action) => {
+  switch (action.type) {
+    case 'ADD_FORM_DATA':
+      return [...state, action.payload];
+    default:
+      return state;
+  }
+};
+
+const rootReducer = combineReducers({
+  form: formReducer,
+  tableData: tableDataReducer
+});
+
+export default rootReducer;

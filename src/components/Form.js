@@ -1,95 +1,75 @@
-import React, { useState } from 'react';
-import { BrowserRouter as Router, Switch, Route, Link } from 'react-router-dom';
-import FormData from './Formdata';
-import './components/Form.css';
+import React from 'react';
+import { connect } from 'react-redux';
+import { addFormData } from '../store/action';
 
-export default function Form() {
-  const [formData, setFormData] = useState({
-    name: '',
-    email: '',
-    gender: '',
-    password: ''
-  });
-
-  const [tableData, setTableData] = useState([]);
-
-  const handleSubmit = function (event) {
+const Form = ({ formData, addFormData }) => {
+  const handleSubmit = (event) => {
     event.preventDefault();
-    setTableData([...tableData, formData]);
-    setFormData({
-      name: '',
-      email: '',
-      gender: '',
-      password: ''
-    });
-  };
-
-  const handleChange = function (event) {
-    setFormData({
-      ...formData,
-      [event.target.name]: event.target.value
-    });
+    addFormData(formData);
   };
 
   return (
-    <Router>
-      <Switch>
-        <Route path="/" exact>
-          <form onSubmit={handleSubmit} className="form-container">
-            <div className="input-group mb-3">
-              <label>Name:</label>
-              <input
-                className="form-input"
-                type="text"
-                name="name"
-                value={formData.name}
-                onChange={handleChange}
-              />
-            </div>
-            <div className="input-group mb-3">
-              <label>Email:</label>
-              <input
-                className="form-input"
-                type="email"
-                name="email"
-                value={formData.email}
-                onChange={handleChange}
-              />
-            </div>
-            <div className="input-group mb-3">
-              <label>Gender:</label>
-              <select
-                name="gender"
-                className="form-input"
-                value={formData.gender}
-                onChange={handleChange}
-              >
-                <option value="">Other</option>
-                <option value="male">Male</option>
-                <option value="female">Female</option>~
-              </select>
-            </div>
-            <div className="input-group mb-3">
-              <label>Password:</label>
-              <input
-                type="password"
-                name="password"
-                className="form-input"
-                value={formData.password}
-                onChange={handleChange}
-              />
-            </div>
-            <button type="submit" className="btn-primary">
-              Submit
-            </button>
-          </form>
-          <Link to="/form-data">View Form Data</Link>
-        </Route>
-        <Route path="/form-data">
-          <FormData data={tableData} />
-          <Link to="/" className="btn-primary">Go Back</Link>
-        </Route>
-      </Switch>
-    </Router>
+    <div>
+      <form onSubmit={handleSubmit}>
+        <div>
+          <label>Name:</label>
+          <input
+            value={formData.name}
+            onChange={(e) => updateFormData('name', e.target.value)}
+            type="text"
+            name="name"
+            required
+          />
+        </div>
+
+        <div>
+          <label>Email:</label>
+          <input
+            value={formData.email}
+            onChange={(e) => updateFormData('email', e.target.value)}
+            type="email"
+            name="email"
+            required
+          />
+        </div>
+
+        <div>
+          <label>Gender:</label>
+          <select
+            value={formData.gender}
+            onChange={(e) => updateFormData('gender', e.target.value)}
+            name="gender"
+            required
+          >
+            <option value="">Other</option>
+            <option value="male">Male</option>
+            <option value="female">Female</option>
+          </select>
+        </div>
+
+        <div>
+          <label>Password:</label>
+          <input
+            value={formData.password}
+            onChange={(e) => updateFormData('password', e.target.value)}
+            type="password"
+            name="password"
+            required
+          />
+        </div>
+
+        <button type="submit">Submit</button>
+      </form>
+    </div>
   );
-}
+};
+
+const mapStateToProps = (state) => ({
+  formData: state.form
+});
+
+const mapDispatchToProps = {
+  addFormData
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(Form);

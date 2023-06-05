@@ -1,20 +1,8 @@
-import React, { useContext } from 'react';
-import { Link } from 'react-router-dom';
-import { DataContext } from '../Context/DataContext';
+import React from 'react';
+import { connect } from 'react-redux';
+import { addFormData } from '../store/action';
 
-const Form = () => {
-  const { addFormData, formData,
-    setFormData } = useContext(DataContext);
-
-
-  //created a function for handling the change 
-  const handleChange = (event) => {
-    setFormData((prevFormData) => ({
-      ...prevFormData,
-      [event.target.name]: event.target.value
-    }))
-  };
-
+const Form = ({ formData, addFormData }) => {
   const handleSubmit = (event) => {
     event.preventDefault();
     addFormData(formData);
@@ -25,27 +13,31 @@ const Form = () => {
       <form onSubmit={handleSubmit}>
         <div>
           <label>Name:</label>
-          <input value={formData.name}
-            onChange={handleChange}
+          <input
+            value={formData.name}
+            onChange={(e) => updateFormData('name', e.target.value)}
             type="text"
             name="name"
-            required />
+            required
+          />
         </div>
 
         <div>
           <label>Email:</label>
-          <input value={formData.email}
-            onChange={handleChange}
+          <input
+            value={formData.email}
+            onChange={(e) => updateFormData('email', e.target.value)}
             type="email"
             name="email"
-            required />
+            required
+          />
         </div>
 
         <div>
           <label>Gender:</label>
           <select
             value={formData.gender}
-            onChange={handleChange}
+            onChange={(e) => updateFormData('gender', e.target.value)}
             name="gender"
             required
           >
@@ -57,16 +49,27 @@ const Form = () => {
 
         <div>
           <label>Password:</label>
-          <input value={formData.password}
-            onChange={handleChange}
-            type="password" name="password" required />
+          <input
+            value={formData.password}
+            onChange={(e) => updateFormData('password', e.target.value)}
+            type="password"
+            name="password"
+            required
+          />
         </div>
 
         <button type="submit">Submit</button>
       </form>
-      <Link to="/formdata">View Form Data</Link>
     </div>
   );
 };
 
-export default Form;
+const mapStateToProps = (state) => ({
+  formData: state.form
+});
+
+const mapDispatchToProps = {
+  addFormData
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(Form);

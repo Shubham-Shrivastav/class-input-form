@@ -1,14 +1,34 @@
-import React from 'react';
-import ReactDOM from 'react-dom/client';
-import './index.css';
-import reportWebVitals from './reportWebVitals';
-import { RouterProvider } from 'react-router-dom';
-import App from './App';
+import { combineReducers } from 'redux';
 
-ReactDOM.createRoot(document.getElementById("root")).render(
-  <React.StrictMode>
-    <App />
-  </React.StrictMode>
-);
+const formReducer = (state = {
+  name: '',
+  email: '',
+  gender: '',
+  password: ''
+}, action) => {
+  switch (action.type) {
+    case 'UPDATE_FORM_DATA':
+      return {
+        ...state,
+        [action.payload.name]: action.payload.value
+      };
+    default:
+      return state;
+  }
+};
 
-reportWebVitals();
+const tableDataReducer = (state = [], action) => {
+  switch (action.type) {
+    case 'ADD_FORM_DATA':
+      return [...state, action.payload];
+    default:
+      return state;
+  }
+};
+
+const rootReducer = combineReducers({
+  form: formReducer,
+  tableData: tableDataReducer
+});
+
+export default rootReducer;

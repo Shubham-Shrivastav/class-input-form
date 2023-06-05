@@ -1,9 +1,10 @@
 import React from 'react';
-import { RouterProvider, createBrowserRouter } from "react-router-dom";
-import ErrorPage from "./error-page";
+import { RouterProvider, createBrowserRouter } from 'react-router-dom';
+import { Provider } from 'react-redux';
+import store from './store';
+import ErrorPage from './error-page';
 import Form from './components/Form';
 import TableData from './components/Tabledata';
-import { DataProvider } from './Context/DataContext';
 
 const App = () => {
   const router = createBrowserRouter([
@@ -12,8 +13,6 @@ const App = () => {
       element: <Form />,
       errorElement: <ErrorPage />
     },
-
-    // submitting the data to the page called tabledata
     {
       path: '/formdata',
       element: <TableData />
@@ -21,10 +20,9 @@ const App = () => {
   ]);
 
   return (
-    <DataProvider>
-      {/* removed the props to the routs element and also the value in DataProvider */}
+    <Provider store={store}>
       <RouterProvider router={router} />
-    </DataProvider>
+    </Provider>
   );
 };
 

@@ -1,10 +1,7 @@
-import React, { useContext } from 'react';
-import { Link } from 'react-router-dom';
-import { DataContext } from '../Context/DataContext';
+import React from 'react';
+import { connect } from 'react-redux';
 
-const TableData = () => {
-  const { tableData } = useContext(DataContext);
-
+const TableData = ({ tableData }) => {
   return (
     <>
       <table>
@@ -33,9 +30,12 @@ const TableData = () => {
           )}
         </tbody>
       </table>
-      <Link to="/">Go Back</Link>
     </>
   );
 };
 
-export default TableData;
+const mapStateToProps = (state) => ({
+  tableData: state.tableData
+});
+
+export default connect(mapStateToProps)(TableData);

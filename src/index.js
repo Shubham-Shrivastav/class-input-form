@@ -1,34 +1,11 @@
-import { combineReducers } from 'redux';
+import ReactDOM from 'react-dom';
+import { Provider } from 'react-redux';
+import store from './Store/Store';
+import App from './App';
 
-const formReducer = (state = {
-  name: '',
-  email: '',
-  gender: '',
-  password: ''
-}, action) => {
-  switch (action.type) {
-    case 'UPDATE_FORM_DATA':
-      return {
-        ...state,
-        [action.payload.name]: action.payload.value
-      };
-    default:
-      return state;
-  }
-};
-
-const tableDataReducer = (state = [], action) => {
-  switch (action.type) {
-    case 'ADD_FORM_DATA':
-      return [...state, action.payload];
-    default:
-      return state;
-  }
-};
-
-const rootReducer = combineReducers({
-  form: formReducer,
-  tableData: tableDataReducer
-});
-
-export default rootReducer;
+ReactDOM.render(
+  <Provider store={store}>
+    <App />
+  </Provider>,
+  document.getElementById('root')
+);

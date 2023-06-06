@@ -8,4 +8,3 @@ const tableDataReducer = (state = [], action) => {
   };
   
   export default tableDataReducer;
-  

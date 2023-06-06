@@ -1,12 +1,27 @@
-import React from 'react';
+import React, { useCallback } from 'react';
 import { connect } from 'react-redux';
-import { addFormData } from '../store/action';
+import { addFormData, updateFormData } from '../Store/action';
+import { Link } from 'react-router-dom';
 
-const Form = ({ formData, addFormData }) => {
-  const handleSubmit = (event) => {
-    event.preventDefault();
-    addFormData(formData);
-  };
+const Form = ({ formData, addFormData, updateFormData }) => {
+  const handleSubmit = useCallback(
+    (event) => {
+      event.preventDefault();
+      addFormData(formData, () => {
+        updateFormData({
+          name: '',
+          email: '',
+          gender: '',
+          password: ''
+        });
+      });
+    },
+    [addFormData, formData, updateFormData]
+  );
+
+  const handleInputChange = useCallback((name, value) => {
+    updateFormData({ name, value });
+  }, [updateFormData]);
 
   return (
     <div>
@@ -15,7 +30,7 @@ const Form = ({ formData, addFormData }) => {
           <label>Name:</label>
           <input
             value={formData.name}
-            onChange={(e) => updateFormData('name', e.target.value)}
+            onChange={(e) => handleInputChange('name', e.target.value)}
             type="text"
             name="name"
             required
@@ -26,7 +41,7 @@ const Form = ({ formData, addFormData }) => {
           <label>Email:</label>
           <input
             value={formData.email}
-            onChange={(e) => updateFormData('email', e.target.value)}
+            onChange={(e) => handleInputChange('email', e.target.value)}
             type="email"
             name="email"
             required
@@ -37,7 +52,7 @@ const Form = ({ formData, addFormData }) => {
           <label>Gender:</label>
           <select
             value={formData.gender}
-            onChange={(e) => updateFormData('gender', e.target.value)}
+            onChange={(e) => handleInputChange('gender', e.target.value)}
             name="gender"
             required
           >
@@ -51,7 +66,7 @@ const Form = ({ formData, addFormData }) => {
           <label>Password:</label>
           <input
             value={formData.password}
-            onChange={(e) => updateFormData('password', e.target.value)}
+            onChange={(e) => handleInputChange('password', e.target.value)}
             type="password"
             name="password"
             required
@@ -60,6 +75,7 @@ const Form = ({ formData, addFormData }) => {
 
         <button type="submit">Submit</button>
       </form>
+      <Link to="/formdata">Go to TableData</Link>
     </div>
   );
 };
@@ -69,7 +85,8 @@ const mapStateToProps = (state) => ({
 });
 
 const mapDispatchToProps = {
-  addFormData
+  addFormData,
+  updateFormData
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(Form);

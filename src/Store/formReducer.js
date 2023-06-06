@@ -15,5 +15,5 @@ const formReducer = (state = {
     }
   };
   
-  export default formReducer;
-  
+export default formReducer;
+// export { formReducer, tableDataReducer };

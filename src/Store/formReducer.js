@@ -11,7 +11,6 @@ const formReducer = (state = {
         [action.payload.name]: action.payload.value
       };
     case 'CLEAR_FORM_DATA':
-      // console.log("---------------------", action)
       return {
         name: '',
         email: '',

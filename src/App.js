@@ -1,21 +1,23 @@
-import React, { Component } from 'react';
-import { BrowserRouter as Router, Route } from 'react-router-dom';
-
+import React from 'react';
+import { Provider } from 'react-redux';
+import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
+import store from './Store/Store';
+import ErrorPage from './error-page';
 import Form from './components/Form';
-import Navbar from './components/Navbar';
-import Formdata from './components/Formdata';
+import TableData from './components/Tabledata';
 
-class App extends Component {
-  render() {
-    return (
+const App = () => {
+  return (
+    <Provider store={store}>
       <Router>
-        <Navbar title="Detail Form" />
-        <div className="container">
-          <Route exact path="/" component={Form} />
-        </div>
-        <Route path="/formdata" component={Formdata} />
+        <Routes>
+          <Route path="/" element={<Form />} />
+          <Route path="/formdata" element={<TableData />} />
+          <Route path="*" element={<ErrorPage />} />
+        </Routes>
       </Router>
-    );
-  }
-}
+    </Provider>
+  );
+};
+
 export default App;

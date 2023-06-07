@@ -1,26 +1,15 @@
 import { combineReducers } from 'redux';
-
-const formReducer = (state = {
-  name: '',
-  email: '',
-  gender: '',
-  password: ''
-}, action) => {
-  switch (action.type) {
-    case 'UPDATE_FORM_DATA':
-      return {
-        ...state,
-        [action.payload.name]: action.payload.value
-      };
-    default:
-      return state;
-  }
-};
+import formReducer from './formReducer';
 
 const tableDataReducer = (state = [], action) => {
+
   switch (action.type) {
     case 'ADD_FORM_DATA':
-      return [...state, action.payload];
+      const newState = [...state, action.payload];
+      if (action.callback) {
+        action.callback();
+      }
+      return newState;
     default:
       return state;
   }
@@ -31,4 +20,4 @@ const rootReducer = combineReducers({
   tableData: tableDataReducer
 });
 
-export default rootReducer;
+export default rootReducer

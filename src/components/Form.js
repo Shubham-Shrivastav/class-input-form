@@ -1,26 +1,20 @@
 import React, { useCallback } from 'react';
 import { connect } from 'react-redux';
-import { addFormData, updateFormData } from '../Store/action';
+import { addFormData, updateFormData, clearFormData } from '../Store/action';
 import { Link } from 'react-router-dom';
 
-const Form = ({ formData, addFormData, updateFormData }) => {
+const Form = ({ formData, addFormData, updateFormData, clearFormData }) => {
   const handleSubmit = useCallback(
     (event) => {
       event.preventDefault();
-      addFormData(formData, () => {
-        updateFormData({
-          name: '',
-          email: '',
-          gender: '',
-          password: ''
-        });
-      });
+      addFormData(formData);
+      clearFormData()
     },
-    [addFormData, formData, updateFormData]
+    [addFormData, formData, updateFormData, clearFormData]
   );
 
   const handleInputChange = useCallback((name, value) => {
-    updateFormData({ name, value });
+    updateFormData({ name: name, value: value });
   }, [updateFormData]);
 
   return (
@@ -84,9 +78,10 @@ const mapStateToProps = (state) => ({
   formData: state.form
 });
 
-const mapDispatchToProps = {
-  addFormData,
-  updateFormData
-};
+const mapDispatchToProps = (dispatch) => ({
+  addFormData: (data) => dispatch(addFormData(data)),
+  updateFormData: (data) => dispatch(updateFormData(data)),
+  clearFormData: () => dispatch(clearFormData())
+});
 
 export default connect(mapStateToProps, mapDispatchToProps)(Form);
